@@ -1,0 +1,34 @@
+meta {
+  name: register
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{BASE_URL}}/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "first_name": "navid",
+    "last_name": "navid",
+    "email":"user@example.org",
+    "mobile": "+989354096951",
+    "password": "navid@1234",
+    "password_confirmation": "navid@1234"
+  }
+}
+
+script:post-response {
+  var jsonData = res.getBody();
+  if (res.getStatus() == 200){
+      bru.setVar("AUTH_TOKEN", jsonData.data.token);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
